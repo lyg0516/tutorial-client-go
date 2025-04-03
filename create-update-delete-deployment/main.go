@@ -129,9 +129,10 @@ func main() {
 	prompt()
 	fmt.Printf("Deleting deployment %q.\n", result.GetObjectMeta().GetName())
 	deletePolicy := metav1.DeletePropagationForeground
-	if deploymentsClient.Delete(context.TODO(), "demo-deployment", metav1.DeleteOptions{
+	err = deploymentsClient.Delete(context.TODO(), "demo-deployment", metav1.DeleteOptions{
 		PropagationPolicy: &deletePolicy,
-	}); err != nil {
+	})
+	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("Deleted deployment %q.\n", result.GetObjectMeta().GetName())
